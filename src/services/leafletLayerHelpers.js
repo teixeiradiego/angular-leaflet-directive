@@ -174,7 +174,7 @@ angular.module("leaflet-directive")
             mustHaveUrl: false,
             createLayer: function (params) {
                 var layer = L.featureGroup();
-                layer.options = params.options;
+                L.setOptions(layer, params.options);
                 return layer;
             }
         },
