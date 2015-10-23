@@ -1,5 +1,5 @@
 /*!
-*  angular-leaflet-directive 0.9.0 2015-10-12
+*  angular-leaflet-directive 0.9.0 2015-10-23
 *  angular-leaflet-directive - An AngularJS directive to easily interact with Leaflet maps
 *  git: https://github.com/tombatossals/angular-leaflet-directive
 */
@@ -1627,8 +1627,10 @@ angular.module("leaflet-directive")
         },
         featureGroup: {
             mustHaveUrl: false,
-            createLayer: function () {
-                return L.featureGroup();
+            createLayer: function (params) {
+                var layer = L.featureGroup();
+                layer.options = params.options;
+                return layer;
             }
         },
         google: {
@@ -2578,6 +2580,10 @@ angular.module("leaflet-directive").service('leafletMarkersHelpers', ["$rootScop
                 marker.unbindPopup();
                 if (isString(markerData.message)) {
                     marker.bindPopup(markerData.message, markerData.popupOptions);
+                    // if marker has been already focused, reopen popup
+                    if (map.hasLayer(marker) && markerData.focus === true) {
+                        marker.openPopup();
+                    }
                 }
             }
 
