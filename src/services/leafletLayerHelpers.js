@@ -172,8 +172,10 @@ angular.module("leaflet-directive")
         },
         featureGroup: {
             mustHaveUrl: false,
-            createLayer: function () {
-                return L.featureGroup();
+            createLayer: function (params) {
+                var layer = L.featureGroup();
+                layer.options = params.options;
+                return layer;
             }
         },
         google: {
